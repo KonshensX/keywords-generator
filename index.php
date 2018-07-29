@@ -11,6 +11,9 @@ $content = $yaml->parse(file_get_contents('content.yaml'));
 // array of regions
 $regions = explode(";", $content['regions']);
 
+$linksFileHandle = fopen('footer-links.php', 'a');
+fwrite($linksFileHandle, (new \DateTime())->format("Y-M-D h:m:s") . "-----------------------" . PHP_EOL);
+
 // iterate over all regions
 for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
 {
@@ -44,8 +47,15 @@ for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
             $newContent = str_replace(['$motcle', '$ville'], [ucfirst($keyword_string), ucfirst($region_string)], $data);
             fwrite($newHandle, $newContent);
             fclose($newHandle);
+
+            // append the created link to the footer-links file
+            $link = '<a href="' . $newFilename . '">' . $keyword_string. ' ' . $region_string . '</a>' . PHP_EOL;
+            fwrite($linksFileHandle, $link);
         }
         // closing the file
         fclose($handle);
+        // appending an empty like just for aestethic reasons
+        fwrite($linksFileHandle, PHP_EOL);
     }
 }
+fclose($linksFileHandle);
