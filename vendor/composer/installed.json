@@ -17,7 +17,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2018-04-30 19:57:29",
+        "time": "2018-04-30T19:57:29+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -84,7 +84,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2018-05-30 07:26:09",
+        "time": "2018-05-30T07:26:09+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

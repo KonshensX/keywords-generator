@@ -8,6 +8,7 @@ use Symfony\Component\Yaml\Parser;
 // parse the file
 $yaml = new Parser();
 $content = $yaml->parse(file_get_contents('content.yaml'));
+
 // array of regions
 $regions = explode(";", $content['regions']);
 
@@ -38,9 +39,16 @@ for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
         for ($index = 0; $index < count($keywords); $index++) {
             $keyword_string = $keywords[$index];
             $region_string = $regions[$regionIndex];
+
+            echo "########" . PHP_EOL; 
             // create a new file and save it to the disk
-            $newFilename = strtolower($keyword_string) . " " . strtolower($region_string);
+            // replace the weird french characters with just regular "english" characters
+
+            $newFilename =  mb_strtolower($keyword_string) . " " . mb_strtolower($region_string);
+            
+            echo "########" . PHP_EOL; 
             $newFilename = str_replace(' ', '-', $newFilename) .'.php';
+            
 
             $newHandle = fopen($newFilename, 'w');
             // replace the data on the model file.
