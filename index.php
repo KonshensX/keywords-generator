@@ -14,6 +14,8 @@ $regions = explode(";", $content['regions']);
 
 $linksFileHandle = fopen('footer-links.php', 'a');
 fwrite($linksFileHandle, (new \DateTime())->format("Y-M-D h:m:s") . "-----------------------" . PHP_EOL);
+// display some messages for the user, numbers of models , regions, how many combinations are there, and the count of files that were generated
+
 
 // iterate over all regions
 for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
@@ -40,15 +42,17 @@ for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
             $keyword_string = $keywords[$index];
             $region_string = $regions[$regionIndex];
 
-            echo "########" . PHP_EOL; 
             // create a new file and save it to the disk
             // replace the weird french characters with just regular "english" characters
 
-            $newFilename =  mb_strtolower($keyword_string) . " " . mb_strtolower($region_string);
+            $newFilename = mb_strtolower($keyword_string) . " " . mb_strtolower($region_string);
             
-            echo "########" . PHP_EOL; 
-            $newFilename = str_replace(' ', '-', $newFilename) .'.php';
-            
+            // get rid of the "french" special characters
+            $newFilename = str_replace(
+                                        ["é", "è", "ê", "à", "â", "ô", "ù", "û", "î", "ç", "ï"],
+                                        ["e", "e", "e", "a", "a", "o", "u"; "u", "i", "c", "i"],
+                                        str_replace(' ', '-', $newFilename) .'.php'
+                                        );
 
             $newHandle = fopen($newFilename, 'w');
             // replace the data on the model file.
