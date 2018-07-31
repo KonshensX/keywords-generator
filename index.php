@@ -50,7 +50,7 @@ for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
             // get rid of the "french" special characters
             $newFilename = str_replace(
                                         ["é", "è", "ê", "à", "â", "ô", "ù", "û", "î", "ç", "ï"],
-                                        ["e", "e", "e", "a", "a", "o", "u"; "u", "i", "c", "i"],
+                                        ["e", "e", "e", "a", "a", "o", "u", "u", "i", "c", "i"],
                                         str_replace(' ', '-', $newFilename) .'.php'
                                         );
 
@@ -61,7 +61,8 @@ for ($regionIndex = 0; $regionIndex < count($regions); $regionIndex++ )
             fclose($newHandle);
 
             // append the created link to the footer-links file
-            $link = '<a href="' . $newFilename . '">' . $keyword_string. ' ' . $region_string . '</a>' . PHP_EOL;
+            // wrap the link inside an <li> because usually a <ul> is used to hold all the generated links
+            $link = '<li><a href="' . $newFilename . '">' . $keyword_string. ' ' . $region_string . '</a></li>' . PHP_EOL;
             fwrite($linksFileHandle, $link);
         }
         // closing the file
